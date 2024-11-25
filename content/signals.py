@@ -6,7 +6,7 @@ from content.models import Channel, ContentFile, Content
 
 
 @receiver(pre_save, sender=Channel)
-def channel_pre_save(_sender: Any, instance: Channel, **_kwargs: dict[str, Any]) -> None:
+def channel_pre_save(sender: Any, instance: Channel, **_kwargs: dict[str, Any]) -> None:
     if instance.pk:
         try:
             old_instance = Channel.objects.get(pk=instance.pk)
@@ -19,7 +19,7 @@ def channel_pre_save(_sender: Any, instance: Channel, **_kwargs: dict[str, Any])
 
 
 @receiver(post_delete, sender=Channel)
-def channel_post_delete(_sender: Any, instance: Channel, **_kwargs: dict[str, Any]) -> None:
+def channel_post_delete(sender: Any, instance: Channel, **_kwargs: dict[str, Any]) -> None:
     if instance.picture:
         instance.picture.delete(save=False)
 
@@ -38,18 +38,18 @@ def content_file_pre_save(_sender: Any, instance: ContentFile, **_kwargs: dict[s
 
 
 @receiver(post_delete, sender=ContentFile)
-def content_file_post_delete(_sender: Any, instance: ContentFile, **_kwargs: dict[str, Any]) -> None:
+def content_file_post_delete(sender: Any, instance: ContentFile, **_kwargs: dict[str, Any]) -> None:
     if instance.file:
         instance.file.delete(save=False)
 
 
 @receiver(post_save, sender=Channel)
 @receiver(pre_delete, sender=Channel)
-def channel_invalidate_cache(_sender: Any, instance: Channel, **_kwargs: dict[str, Any]) -> None:
+def channel_invalidate_cache(sender: Any, instance: Channel, **_kwargs: dict[str, Any]) -> None:
     instance.invalidate_cache()
 
 
 @receiver(post_save, sender=Content)
 @receiver(pre_delete, sender=Content)
-def content_invalidate_cache(_sender: Any, instance: Content, **_kwargs: dict[str, Any]) -> None:
+def content_invalidate_cache(sender: Any, instance: Content, **_kwargs: dict[str, Any]) -> None:
     instance.channel.invalidate_cache()
