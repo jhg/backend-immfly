@@ -3,3 +3,4 @@ __pycache__/
 .coverage
 db.sqlite3
 media/
+*.csv

@@ -58,19 +58,16 @@ class Channel(models.Model):
 
     def _rating(self):
         if self.contents.exists():
-            return Content.objects.filter(
-                channel=self
-            ).aggregate(models.Avg('rating'))['rating__avg']
+            return self.contents.aggregate(models.Avg('rating'))['rating__avg']
 
-        subchannels = Channel.objects.filter(parent=self)
-        total = 0
-        items = 0
-        for subchannel in subchannels:
-            if subchannel.rating():
-                total += subchannel.rating()
-                items += 1
+        subratings = [
+            subrating for subrating in (
+                subchannel.rating() for subchannel
+                in self.subchannels.prefetch_related('contents')
+            ) if subrating
+        ]
 
-        return (total / items) if items > 0 else None
+        return (sum(subratings) / len(subratings)) if subratings else None
 
     def _rating_cache_key(self):
         return f"channel_rating_{self.pk}"

@@ -48,7 +48,7 @@ class ChannelSerializer(serializers.HyperlinkedModelSerializer):
 
     def to_representation(self, instance):
         """
-        Modifica la representación para excluir `parent`, `subchannels` y `contents` si están vacíos.
+        Modifies the representation to exclude `parent`, `subchannels`, and `contents` if they are empty.
         """
         representation = super().to_representation(instance)
 
@@ -65,7 +65,7 @@ class ChannelSerializer(serializers.HyperlinkedModelSerializer):
 
     def to_internal_value(self, data):
         """
-        Procesa la entrada para manejar imágenes en Base64 en el campo `picture`.
+        Processes the input to handle Base64 images in the `picture` field.
         """
         picture_data = data.get('picture', None)
 
@@ -116,7 +116,7 @@ class ContentFileItemSerializer(serializers.ModelSerializer):
 
     def get_file(self, obj):
         """
-        Devuelve la URL relativa de la API para interactuar con este archivo.
+        Returns the relative API URL to interact with this file.
         """
         request = self.context.get('request')
         filename = obj.file.name.split('/')[-1]
