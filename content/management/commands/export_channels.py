@@ -1,3 +1,6 @@
+from typing import Any
+
+from django.core.management import CommandParser
 from django.core.management.base import BaseCommand
 from content.models import Channel
 import time
@@ -7,7 +10,7 @@ import csv
 class Command(BaseCommand):
     help = 'Export channels and their ratings to a CSV file'
 
-    def add_arguments(self, parser):
+    def add_arguments(self, parser: CommandParser) -> None:
         parser.add_argument(
             'output_file',
             nargs='?',
@@ -15,7 +18,7 @@ class Command(BaseCommand):
             help='The output CSV file (default: channels_ratings.csv)'
         )
 
-    def handle(self, *args, **kwargs):
+    def handle(self, *args: Any, **kwargs: Any) -> None:
         start_time = time.time()
 
         output_file = kwargs['output_file']

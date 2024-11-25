@@ -2,7 +2,7 @@ from django.test import TestCase
 from content.models import Channel, Content
 
 class TestChannel(TestCase):
-    def test_channel_rating(self):
+    def test_channel_rating(self) -> None:
         channel = Channel.objects.create(title='Channel', language='en')
         subchannel_1 = Channel.objects.create(parent=channel, title='Subchannel 1', language='en')
         content = Content.objects.create(channel=subchannel_1, metadata={}, rating=5.00)

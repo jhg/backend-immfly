@@ -1,21 +1,24 @@
+from urllib.request import Request
+
 from django.core.serializers import serialize
+from django.http import HttpRequest
 from django.shortcuts import render
 from rest_framework import status, generics
 from rest_framework.parsers import FormParser, MultiPartParser, FileUploadParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from content.serializers import ChannelSerializer, ContentSerializer, ContentFileSerializer
-from content.models import Channel, Content
+from content.models import Channel, Content, ContentFile
 
 
-class ChannelList(generics.ListAPIView):
+class ChannelList(generics.ListAPIView[Channel]):
     """
     List root channels or create a new one.
     """
     serializer_class = ChannelSerializer
     queryset = Channel.objects.filter(parent=None)
 
-    def get_serializer_context(self):
+    def get_serializer_context(self) -> dict[str, None | HttpRequest | generics.GenericAPIView[Channel]]:
         """
         Sobrescribe el contexto para excluir el request.
         """
@@ -23,7 +26,7 @@ class ChannelList(generics.ListAPIView):
         context['request'] = None
         return context
 
-    def post(self, request):
+    def post(self, request: Request) -> Response:
         serializer = ChannelSerializer(data=request.data, context={'request': None})
         if serializer.is_valid():
             serializer.save()
@@ -31,20 +34,20 @@ class ChannelList(generics.ListAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ChannelDetails(generics.GenericAPIView):
+class ChannelDetails(generics.GenericAPIView[Channel]):
     """
     Retrieve, update or delete a channel instance.
     """
     serializer_class = ChannelSerializer
 
-    def get(self, request, pk):
+    def get(self, request: Request, pk: int) -> Response:
         channel = generics.get_object_or_404(Channel, pk=pk)
         serializer = ChannelSerializer(channel, context={'request': None})
         data = serializer.data
         data.pop('channel', None)
         return Response(data)
 
-    def post(self, request, pk):
+    def post(self, request: Request, pk: int) -> Response:
         parent_channel = generics.get_object_or_404(Channel, pk=pk)
         serializer = ChannelSerializer(data=request.data, context={'request': None})
         if serializer.is_valid():
@@ -52,7 +55,7 @@ class ChannelDetails(generics.GenericAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def put(self, request, pk):
+    def put(self, request: Request, pk: int) -> Response:
         channel = generics.get_object_or_404(Channel, pk=pk)
         serializer = ChannelSerializer(channel, data=request.data, context={'request': None})
         if serializer.is_valid():
@@ -62,7 +65,7 @@ class ChannelDetails(generics.GenericAPIView):
             return Response(data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def patch(self, request, pk):
+    def patch(self, request: Request, pk: int) -> Response:
         channel = generics.get_object_or_404(Channel, pk=pk)
         serializer = ChannelSerializer(channel, data=request.data, partial=True, context={'request': None})
         if serializer.is_valid():
@@ -72,7 +75,7 @@ class ChannelDetails(generics.GenericAPIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk):
+    def delete(self, request: Request, pk: int) -> Response:
         channel = generics.get_object_or_404(Channel, pk=pk)
         channel.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -83,7 +86,7 @@ class ContentCreation(APIView):
     Create a new content instance.
     """
 
-    def post(self, request, pk):
+    def post(self, request: Request, pk: int) -> Response:
         channel = generics.get_object_or_404(Channel, pk=pk)
         serializer = ContentSerializer(data=request.data, context={'request': None})
         if serializer.is_valid():
@@ -92,20 +95,20 @@ class ContentCreation(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ContentDetails(generics.GenericAPIView):
+class ContentDetails(generics.GenericAPIView[Content]):
     """
     Retrieve, update or delete a content instance.
     """
     serializer_class = ContentSerializer
 
-    def get(self, request, pk):
+    def get(self, request: Request, pk: int) -> Response:
         content = generics.get_object_or_404(Content, pk=pk)
         serializer = ContentSerializer(content, context={'request': None})
         data = serializer.data
         data.pop('content', None)
         return Response(data)
 
-    def put(self, request, pk):
+    def put(self, request: Request, pk: int) -> Response:
         content = generics.get_object_or_404(Content, pk=pk)
         serializer = ContentSerializer(content, data=request.data, context={'request': None})
         if serializer.is_valid():
@@ -115,7 +118,7 @@ class ContentDetails(generics.GenericAPIView):
             return Response(data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def patch(self, request, pk):
+    def patch(self, request: Request, pk: int) -> Response:
         content = generics.get_object_or_404(Content, pk=pk)
         serializer = ContentSerializer(content, data=request.data, partial=True, context={'request': None})
         if serializer.is_valid():
@@ -125,20 +128,20 @@ class ContentDetails(generics.GenericAPIView):
             return Response(data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk):
+    def delete(self, request: Request, pk: int) -> Response:
         content = generics.get_object_or_404(Content, pk=pk)
         content.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class ContentFile(generics.GenericAPIView):
+class ContentFileUpload(generics.GenericAPIView[ContentFile]):
     """
     Upload a file to a content instance.
     """
     parser_classes = [FileUploadParser, FormParser, MultiPartParser]
     serializer_class = ContentFileSerializer
 
-    def get(self, request, pk, filename):
+    def get(self, request: Request, pk: int, filename: str) -> Response:
         content = generics.get_object_or_404(Content, pk=pk)
         file = content.files.filter(file__contains=filename).first()
         if not file:
@@ -146,7 +149,7 @@ class ContentFile(generics.GenericAPIView):
         serializer = ContentFileSerializer(file, context={'request': None})
         return Response(serializer.data)
 
-    def put(self, request, pk, filename):
+    def put(self, request: Request, pk: int, filename: str) -> Response:
         content = generics.get_object_or_404(Content, pk=pk)
         content_file = content.files.filter(file__contains=filename).first()
         if content_file:
@@ -161,7 +164,7 @@ class ContentFile(generics.GenericAPIView):
             )
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, filename):
+    def delete(self, request: Request, pk: int, filename: str) -> Response:
         content = generics.get_object_or_404(Content, pk=pk)
         file = content.files.get(file__contains=filename)
         file.delete()

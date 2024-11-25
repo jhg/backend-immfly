@@ -5,15 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b6ad38a8-72d7-4cd7-99ba-5ebfd9c75714" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ImmflyBackend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/ImmflyBackend/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ImmflyBackend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/ImmflyBackend/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/content/apps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/management/commands/export_channels.py" beforeDir="false" afterPath="$PROJECT_DIR$/content/management/commands/export_channels.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/content/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/content/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/content/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/content/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/signals.py" beforeDir="false" afterPath="$PROJECT_DIR$/content/signals.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/content/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/content/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/content/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -25,9 +37,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2pHnC1HL1aKwwseCTk3I3vjsJYC" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -39,15 +51,19 @@
     "Django Server.ImmflyBackend.executor": "Run",
     "Django tests.Test: content.tests.TestChannel.test_channel_rating.executor": "Debug",
     "Django tests.tests.executor": "Debug",
+    "Python.mypy.exe.executor": "Run",
+    "Python.mypy.executor": "Run",
     "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/jesus/repos/ImmflyBackend/.venv/Scripts/mypy.exe",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "Errors",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -121,7 +137,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1732431736909</updated>
-      <workItem from="1732431737920" duration="58957000" />
+      <workItem from="1732431737920" duration="65858000" />
     </task>
     <servers />
   </component>
@@ -133,7 +149,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/content/models.py</url>
-          <line>74</line>
+          <line>76</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -143,27 +159,27 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/content/signals.py</url>
-          <line>45</line>
+          <line>47</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/content/signals.py</url>
-          <line>46</line>
+          <line>48</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/content/models.py</url>
-          <line>75</line>
+          <line>77</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/content/models.py</url>
-          <line>58</line>
+          <line>60</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/content/models.py</url>
-          <line>45</line>
+          <line>47</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -215,6 +231,7 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/ImmflyBackend$mypy.coverage" NAME="mypy.exe Coverage Results" MODIFIED="1732522098306" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/ImmflyBackend$tests.coverage" NAME="tests Coverage Results" MODIFIED="1732507336248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/ImmflyBackend$Test__content_tests_TestChannel_test_channel_rating.coverage" NAME="Test: content.tests.TestChannel.test_channel_rating Coverage Results" MODIFIED="1732500261378" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>

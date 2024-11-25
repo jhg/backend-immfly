@@ -1,5 +1,6 @@
 import base64
 from decimal import Decimal
+from typing import Any
 
 from django.core.files.base import ContentFile as DjangoContentFile
 from rest_framework.reverse import reverse
@@ -7,7 +8,7 @@ from rest_framework import serializers
 from content.models import Channel, Content, ContentFile
 
 
-class ChannelSerializer(serializers.HyperlinkedModelSerializer):
+class ChannelSerializer(serializers.HyperlinkedModelSerializer[Channel]):
     channel = serializers.HyperlinkedIdentityField(
         view_name='channel-detail',
         required=False,
@@ -43,10 +44,10 @@ class ChannelSerializer(serializers.HyperlinkedModelSerializer):
             'contents',
         ]
 
-    def get_rating(self, instance):
+    def get_rating(self, instance: Channel) -> Decimal | None:
         return instance.rating()
 
-    def to_representation(self, instance):
+    def to_representation(self, instance: Channel) -> dict[str, Any]:
         """
         Modifies the representation to exclude `parent`, `subchannels`, and `contents` if they are empty.
         """
@@ -63,7 +64,7 @@ class ChannelSerializer(serializers.HyperlinkedModelSerializer):
 
         return representation
 
-    def to_internal_value(self, data):
+    def to_internal_value(self, data: dict[str, Any]) -> Any:
         """
         Processes the input to handle Base64 images in the `picture` field.
         """
@@ -73,7 +74,7 @@ class ChannelSerializer(serializers.HyperlinkedModelSerializer):
         if title_data is None:
             if not self.partial:
                 raise serializers.ValidationError("Title is required")
-            else:
+            elif isinstance(self.instance, Channel):
                 title_data = self.instance.title
 
         if picture_data and isinstance(picture_data, str) and picture_data.startswith('data:image/'):
@@ -89,7 +90,7 @@ class ChannelSerializer(serializers.HyperlinkedModelSerializer):
         return super().to_internal_value(data)
 
 
-class ContentFileSerializer(serializers.HyperlinkedModelSerializer):
+class ContentFileSerializer(serializers.HyperlinkedModelSerializer[ContentFile]):
     file = serializers.FileField(
         required=True,
         allow_null=True,
@@ -103,7 +104,7 @@ class ContentFileSerializer(serializers.HyperlinkedModelSerializer):
         ]
 
 
-class ContentFileItemSerializer(serializers.ModelSerializer):
+class ContentFileItemSerializer(serializers.ModelSerializer[ContentFile]):
     file = serializers.SerializerMethodField()
     download = serializers.FileField(source='file', read_only=True)
 
@@ -114,7 +115,7 @@ class ContentFileItemSerializer(serializers.ModelSerializer):
             'download',
         ]
 
-    def get_file(self, obj):
+    def get_file(self, obj: ContentFile) -> str:
         """
         Returns the relative API URL to interact with this file.
         """
@@ -123,7 +124,7 @@ class ContentFileItemSerializer(serializers.ModelSerializer):
         return reverse('content-files', kwargs={'pk': obj.content.pk, 'filename': filename}, request=request)
 
 
-class ContentSerializer(serializers.HyperlinkedModelSerializer):
+class ContentSerializer(serializers.HyperlinkedModelSerializer[Content]):
     channel = serializers.HyperlinkedRelatedField(
         queryset=Channel.objects.all(),
         view_name='channel-detail',

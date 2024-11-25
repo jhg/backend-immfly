@@ -1,10 +1,12 @@
+from typing import Any
+
 from django.dispatch import receiver
 from django.db.models.signals import pre_save, post_delete, pre_delete, post_save
 from content.models import Channel, ContentFile, Content
 
 
 @receiver(pre_save, sender=Channel)
-def channel_pre_save(sender, instance, **kwargs):
+def channel_pre_save(_sender: Any, instance: Channel, **_kwargs: dict[str, Any]) -> None:
     if instance.pk:
         try:
             old_instance = Channel.objects.get(pk=instance.pk)
@@ -17,13 +19,13 @@ def channel_pre_save(sender, instance, **kwargs):
 
 
 @receiver(post_delete, sender=Channel)
-def channel_post_delete(sender, instance, **kwargs):
+def channel_post_delete(_sender: Any, instance: Channel, **_kwargs: dict[str, Any]) -> None:
     if instance.picture:
         instance.picture.delete(save=False)
 
 
 @receiver(pre_save, sender=ContentFile)
-def content_file_pre_save(sender, instance, **kwargs):
+def content_file_pre_save(_sender: Any, instance: ContentFile, **_kwargs: dict[str, Any]) -> None:
     if instance.pk:
         try:
             old_instance = ContentFile.objects.get(pk=instance.pk)
@@ -36,18 +38,18 @@ def content_file_pre_save(sender, instance, **kwargs):
 
 
 @receiver(post_delete, sender=ContentFile)
-def content_file_post_delete(sender, instance, **kwargs):
+def content_file_post_delete(_sender: Any, instance: ContentFile, **_kwargs: dict[str, Any]) -> None:
     if instance.file:
         instance.file.delete(save=False)
 
 
 @receiver(post_save, sender=Channel)
 @receiver(pre_delete, sender=Channel)
-def channel_invalidate_cache(sender, instance, **kwargs):
+def channel_invalidate_cache(_sender: Any, instance: Channel, **_kwargs: dict[str, Any]) -> None:
     instance.invalidate_cache()
 
 
 @receiver(post_save, sender=Content)
 @receiver(pre_delete, sender=Content)
-def content_invalidate_cache(sender, instance, **kwargs):
+def content_invalidate_cache(_sender: Any, instance: Content, **_kwargs: dict[str, Any]) -> None:
     instance.channel.invalidate_cache()

@@ -1,5 +1,5 @@
 from django.urls import path
-from content.views import ChannelList, ChannelDetails, ContentCreation, ContentDetails, ContentFile
+from content.views import ChannelList, ChannelDetails, ContentCreation, ContentDetails, ContentFileUpload
 
 
 urlpatterns = [
@@ -8,5 +8,5 @@ urlpatterns = [
 
     path('channels/<int:pk>/content/', ContentCreation.as_view(), name='content-creation'),
     path('contents/<int:pk>/', ContentDetails.as_view(), name='content-detail'),
-    path('contents/<int:pk>/<str:filename>/', ContentFile.as_view(), name='content-files'),
+    path('contents/<int:pk>/<str:filename>/', ContentFileUpload.as_view(), name='content-files'),
 ]
